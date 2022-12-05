@@ -23,6 +23,9 @@
                 <span class="text-danger">@error("email"){{$message}}@enderror</span>
             </div>
         </div>
-        <input type="submit" value="Aanpassen" class="btn btn-primary col-sm-3 col-10">
+        <div class="d-flex flex-sm-row flex-column col-sm-3 col-10">
+            <input type="submit" value="Aanpassen" class="btn btn-primary mr-sm-2 mr-0 mb-sm-0 mb-2">
+            <a href="{{route("admin.deleteUser", $user->id)}}" class="btn btn-danger">Verwijderen</a>
+        </div>
     </form>
 </x-admin-layout>

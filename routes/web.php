@@ -32,12 +32,16 @@ Route::prefix("/admin")->name("admin.")->middleware("isLoggedIn")->group(functio
     Route::get("klanten", [adminController::class, "getUsers"])->name("users");
     Route::get("klanten/{userId}", [adminController::class, "getSingleUser"])->name("singleUser");
     Route::post("klanten/{userId}", [adminController::class, "editSingleUser"]);
+    Route::get("delete-klant/{userId}", [adminController::class, "deleteUser"])->name("deleteUser");
     Route::get("werknemers", [adminController::class, "getWorkers"])->name("workers");
     Route::get("werknemers/{userId}", [adminController::class, "getSingleWorker"])->name("singleWorker");
     Route::post("werknemers/{userId}", [adminController::class, "editSingleWorker"]);
     Route::get("contact-berichten", [adminController::class, "getContactMessages"])->name("getContactMessages");
     Route::get("contact-berichten/{contactId}", [adminController::class, "getSingleContactMessage"])->name("getSingleContactMessage");
     Route::post("contact-berichten/{contactId}", [adminController::class, "deleteContactMessage"]);
+    Route::get("medewerker-toevoegen", [adminController::class, "addWorkerView"])->name("addWorker");
+    Route::post("medewerker-toevoegen", [adminController::class, "addWorker"]);
+    Route::get("delete-medewerker/{workerId}", [adminController::class, "deleteWorker"])->name("deleteWorker");
 });
 
 Route::prefix("/medewerker")->name("worker.")->middleware("workerLoggedIn")->group(function(){

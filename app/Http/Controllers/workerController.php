@@ -10,9 +10,4 @@ class workerController extends Controller
     {
         return view("worker.dashboard");
     }
-
-    public function addWorker()
-    {
-        return view("worker.addWorker");
-    }
 }

@@ -5,27 +5,24 @@
         <div class="row justify-content-sm-start justify-content-center">
             <div class="form-group col-lg-4 col-sm-6 col-10">
                 <label for="">Voornaam</label>
-                <input type="text" name="firstName" class="form-control" value="{{$user->firstName}}">
+                <input type="text" name="firstName" class="form-control" placeholder="Voornaam">
                 <span class="text-danger">@error("firstName"){{$message}}@enderror</span>
             </div>
             <div class="form-group col-lg-4 col-sm-6 col-10">
                 <label for="">Tussenvoegsel</label>
-                <input type="text" name="prefix" class="form-control" value="{{$user->prefix}}">
+                <input type="text" name="prefix" class="form-control" placeholder="Tussenvoegsel">
             </div>
             <div class="form-group col-lg-4 col-sm-6 col-10">
                 <label for="">Achternaam</label>
-                <input type="text" name="lastName" class="form-control" value="{{$user->lastName}}">
+                <input type="text" name="lastName" class="form-control" placeholder="Achternaam">
                 <span class="text-danger">@error("lastName"){{$message}}@enderror</span>
             </div>
             <div class="form-group col-lg-4 col-sm-6 col-10">
                 <label for="">Email</label>
-                <input type="text" name="email" class="form-control" value="{{$user->email}}">
+                <input type="text" name="email" class="form-control" placeholder="Email">
                 <span class="text-danger">@error("email"){{$message}}@enderror</span>
             </div>
         </div>
-        <div class="d-flex flex-sm-row flex-column col-sm-3 col-10">
-            <input type="submit" value="Aanpassen" class="btn btn-primary mr-sm-2 mr-0 mb-sm-0 mb-2">
-            <a href="{{route("admin.deleteWorker", $user->id)}}" class="btn btn-danger">Verwijderen</a>
-        </div>
+        <input type="submit" value="Toevoegen" class="btn btn-primary col-sm-3 col-10">
     </form>
 </x-admin-layout>
