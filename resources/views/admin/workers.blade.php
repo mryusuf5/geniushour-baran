@@ -32,6 +32,6 @@
                 @endforeach
             </tbody>
         </table>
-        <a href="" class="btn btn-primary">Medewerker toevoegen</a>
+        <a href="{{route("admin.addWorker")}}" class="btn btn-primary">Medewerker toevoegen</a>
     </div>
 </x-admin-layout>
