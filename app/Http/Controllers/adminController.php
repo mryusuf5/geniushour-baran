@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\Notifications;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,7 @@ class adminController extends Controller
 
     public function getUsers()
     {
-        $users = User::where("permissionLevel", "0")->get();
+        $users = User::where("permissionLevel", "0")->latest()->paginate(10);
 
         return view("admin.users", compact("users"));
     }
@@ -56,7 +57,7 @@ class adminController extends Controller
 
     public function getWorkers()
     {
-        $users = User::where("permissionLevel", "1")->get();
+        $users = User::where("permissionLevel", "1")->latest()->paginate(10);
 
         return view("admin.workers", compact("users"));
     }
@@ -97,7 +98,7 @@ class adminController extends Controller
 
     public function getContactMessages()
     {
-        $contacts = Contact::orderBy("created_at", "DESC")->get();
+        $contacts = Contact::orderBy("created_at", "DESC")->latest()->paginate(10);
         return view("admin.contactMessages", compact("contacts"));
     }
 
@@ -140,5 +141,19 @@ class adminController extends Controller
         $user->save();
 
         return redirect()->route("admin.workers")->with("success", "Medewerker toegevoegd.");
+    }
+
+    public function getNotifications()
+    {
+        $notifications = Notifications::orderBy("created_at", "DESC")->paginate(10);
+
+        return view("admin.notifications", compact("notifications"));
+    }
+
+    public function getSingleNotification($id)
+    {
+        $notification = Notifications::find($id);
+
+        return view("admin.singleNotification", compact("notification"));
     }
 }

@@ -30,5 +30,6 @@
             @endforeach
             </tbody>
         </table>
+        {{$contacts->links()}}
     </div>
 </x-admin-layout>

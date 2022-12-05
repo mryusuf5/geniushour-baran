@@ -53,10 +53,17 @@
             </a>
         </li>
 
-        <li class="nav-item {{Route::is("admin.getContactMessages") ? "active" : ""}}">
+        <li class="nav-item {{Route::is("admin.getContactMessages") || Route::is("admin.getSingleContactMessage") ? "active" : ""}}">
             <a href="{{route("admin.getContactMessages")}}" class="nav-link">
                 <i class="fa-solid fa-envelope"></i>
                 <span>Contact berichten</span>
+            </a>
+        </li>
+
+        <li class="nav-item {{Route::is("admin.getNotifications") || Route::is("admin.getSingleNotification") ? "active" : ""}}">
+            <a href="{{route("admin.getNotifications")}}" class="nav-link">
+                <i class="fa-solid fa-bell"></i>
+                <span>Notificaties</span>
             </a>
         </li>
 
@@ -166,47 +173,23 @@
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell fa-fw"></i>
                             <!-- Counter - Alerts -->
-                            <span class="badge badge-danger badge-counter">3+</span>
+                            <span class="badge badge-danger badge-counter">{{count($notifications) > 9 ? "9+" : count($notifications)}}</span>
                         </a>
                         <!-- Dropdown - Alerts -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in">
                             <h6 class="dropdown-header">
                                 Notificaties
                             </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-primary">
-                                        <i class="fas fa-file-alt text-white"></i>
+                            @foreach($notifications->take(4) as $notification)
+                                <a class="dropdown-item d-flex align-items-center" href="{{route("admin.getSingleNotification", $notification->id)}}">
+                                    <div>
+                                        <div class="small text-gray-500">{{$notification->created_at}}</div>
+                                        <div class="font-weight-bold text-truncate">{{$notification->message}}</div>
+                                        <div class="small text-gray-500">{{$notification->firstName . " " . $notification->prefix . " " . $notification->lastName}}</div>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 2, 2019</div>
-                                    Spending Alert: We've noticed unusually high spending for your account.
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                </a>
+                            @endforeach
+                            <a class="dropdown-item text-center small text-gray-500" href="{{route("admin.getNotifications")}}">Alle notificaties</a>
                         </div>
                     </li>
 
@@ -216,7 +199,7 @@
                            data-toggle="dropdown">
                             <i class="fas fa-envelope fa-fw"></i>
                             <!-- Counter - Messages -->
-                            <span class="badge badge-danger badge-counter">{{count($contacts)}}</span>
+                            <span class="badge badge-danger badge-counter">{{count($contacts) > 9 ? "9+" : count($contacts)}}</span>
                         </a>
                         <!-- Dropdown - Messages -->
                         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -224,9 +207,12 @@
                             <h6 class="dropdown-header">
                                 Berichten
                             </h6>
-                            @foreach($contacts as $contact)
+                            @foreach($contacts->take(4) as $contact)
                                 <a class="dropdown-item d-flex align-items-center" href="{{route("admin.getSingleContactMessage", $contact->id)}}">
                                     <div class="font-weight-bold">
+                                        <div class="small text-gray-500">
+                                            {{$contact->created_at}}
+                                        </div>
                                         <div class="text-truncate">{{$contact->message}}</div>
                                         <div class="small text-gray-500">{{$contact->firstName . " " . $contact->prefix . " " . $contact->lastName}}</div>
                                     </div>

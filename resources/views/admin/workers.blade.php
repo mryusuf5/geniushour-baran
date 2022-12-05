@@ -33,5 +33,6 @@
             </tbody>
         </table>
         <a href="{{route("admin.addWorker")}}" class="btn btn-primary">Medewerker toevoegen</a>
+        {{$users->links()}}
     </div>
 </x-admin-layout>

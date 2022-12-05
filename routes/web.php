@@ -26,6 +26,8 @@ Route::post("/register", [userController::class, "register"]);
 Route::get("/logout", [userController::class, "logout"])->name("logout");
 Route::get("/contact", [userController::class, "contact"])->name("contact");
 Route::post("/contact", [userController::class, "postContact"]);
+Route::get("muziek-kopen", [userController::class, "buyMusic"])->name("buyMusic");
+Route::post("muziek-kopen", [userController::class, "sendMusicRequest"]);
 
 Route::prefix("/admin")->name("admin.")->middleware("isLoggedIn")->group(function(){
     Route::get("dashboard", [adminController::class, "index"])->name("dashboard");
@@ -42,6 +44,8 @@ Route::prefix("/admin")->name("admin.")->middleware("isLoggedIn")->group(functio
     Route::get("medewerker-toevoegen", [adminController::class, "addWorkerView"])->name("addWorker");
     Route::post("medewerker-toevoegen", [adminController::class, "addWorker"]);
     Route::get("delete-medewerker/{workerId}", [adminController::class, "deleteWorker"])->name("deleteWorker");
+    Route::get("notificaties", [adminController::class, "getNotifications"])->name("getNotifications");
+    Route::get("notificaties/{notificationId}", [adminController::class, "getSingleNotification"])->name("getSingleNotification");
 });
 
 Route::prefix("/medewerker")->name("worker.")->middleware("workerLoggedIn")->group(function(){
