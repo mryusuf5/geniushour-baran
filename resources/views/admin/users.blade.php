@@ -30,5 +30,6 @@
                 @endforeach
             </tbody>
         </table>
+        {{$users->links()}}
     </div>
 </x-admin-layout>

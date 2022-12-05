@@ -4,21 +4,21 @@
         @method("POST")
         <div class="row justify-content-sm-start justify-content-center">
             <div class="form-group col-lg-4 col-sm-6 col-10">
-                <label for="">Voornaam</label>
+                <label for="">Voornaam:</label>
                 <input type="text" name="firstName" class="form-control" value="{{$user->firstName}}">
                 <span class="text-danger">@error("firstName"){{$message}}@enderror</span>
             </div>
             <div class="form-group col-lg-4 col-sm-6 col-10">
-                <label for="">Tussenvoegsel</label>
+                <label for="">Tussenvoegsel:</label>
                 <input type="text" name="prefix" class="form-control" value="{{$user->prefix}}">
             </div>
             <div class="form-group col-lg-4 col-sm-6 col-10">
-                <label for="">Achternaam</label>
+                <label for="">Achternaam:</label>
                 <input type="text" name="lastName" class="form-control" value="{{$user->lastName}}">
                 <span class="text-danger">@error("lastName"){{$message}}@enderror</span>
             </div>
             <div class="form-group col-lg-4 col-sm-6 col-10">
-                <label for="">Email</label>
+                <label for="">Email:</label>
                 <input type="text" name="email" class="form-control" value="{{$user->email}}">
                 <span class="text-danger">@error("email"){{$message}}@enderror</span>
             </div>

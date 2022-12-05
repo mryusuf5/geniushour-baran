@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
-use Illuminate\Http\Request;
+use App\Models\MusicOrders;
+use App\Models\Notifications;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -99,5 +101,42 @@ class userController extends Controller
         Contact::create($request->all());
 
         return redirect()->route("contact")->with("success", "Bericht verzonden, we zullen zo snel mogelijk contact met u opnemen.");
+    }
+
+    public function buyMusic()
+    {
+        return view("user.buyMusic");
+    }
+
+    public function sendMusicRequest(Request $request)
+    {
+        $request->validate([
+            "firstName" => "required",
+            "lastName" => "required",
+            "email" => "required",
+            "message" => "required"
+        ]);
+
+//        $order = new MusicOrders;
+//
+//        $order->firstName = $request->firstName;
+//        $order->prefix = $request->prefix;
+//        $order->lastName = $request->lastName;
+//        $order->email = $request->email;
+//        $order->message = $request->message;
+//
+//        $order->save();
+        MusicOrders::create($request->all());
+        $notification = new Notifications;
+
+        $notification->firstName = $request->firstName;
+        $notification->prefix = $request->prefix;
+        $notification->lastName = $request->lastName;
+        $notification->email = $request->email;
+        $notification->message = $request->message;
+        $notification->level = 1;
+        $notification->save();
+
+        return redirect()->route("buyMusic")->with("success", "Verzoek verzonden, we mailen u zo snel mogelijk.");
     }
 }

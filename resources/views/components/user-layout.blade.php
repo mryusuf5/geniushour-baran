@@ -21,7 +21,7 @@
             <div class="d-flex justify-content-lg-center w-100 my-lg-0 my-3">
                 <ul class="navbar-nav mb-2 mb-lg-0 d-flex gap-4">
                     <li class="nav-item">
-                        <a href="" class="nav-link text-white">Muziek kopen</a>
+                        <a href="{{route("buyMusic")}}" class="nav-link text-white">Muziek kopen</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{route("contact")}}" class="nav-link text-white">Contact</a>
