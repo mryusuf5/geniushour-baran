@@ -43,7 +43,7 @@
                         </li>
                         @if(Session::get("user")->permissionLevel == "1")
                         <li class="dropdown-item">
-                            <a href="">Mijn opdrachten</a>
+                            <a href="{{route("worker.dashboard")}}">Mijn dashboard</a>
                         </li>
                         @endif
                         @if(Session::get("user")->permissionLevel == "2")
