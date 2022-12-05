@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\workerController;
 use App\Http\Middleware\AuthCheck;
 
 /*
@@ -37,4 +38,8 @@ Route::prefix("/admin")->name("admin.")->middleware("isLoggedIn")->group(functio
     Route::get("contact-berichten", [adminController::class, "getContactMessages"])->name("getContactMessages");
     Route::get("contact-berichten/{contactId}", [adminController::class, "getSingleContactMessage"])->name("getSingleContactMessage");
     Route::post("contact-berichten/{contactId}", [adminController::class, "deleteContactMessage"]);
+});
+
+Route::prefix("/medewerker")->name("worker.")->middleware("workerLoggedIn")->group(function(){
+    Route::get("dashboard", [workerController::class, "index"])->name("dashboard");
 });
