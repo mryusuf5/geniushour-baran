@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConnectOrderWorker;
 use App\Models\Contact;
+use App\Models\MusicOrders;
 use App\Models\Notifications;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class adminController extends Controller
@@ -155,5 +158,43 @@ class adminController extends Controller
         $notification = Notifications::find($id);
 
         return view("admin.singleNotification", compact("notification"));
+    }
+
+    public function deleteNotification($id)
+    {
+        Notifications::destroy($id);
+
+        return redirect()->route("admin.getNotifications")->with("success", "Notificatie verwijderd");
+    }
+
+    public function getSongRequests()
+    {
+        $requests = MusicOrders::orderBy("created_at", "DESC")->paginate(10);
+
+        return view("admin.musicOrders", compact("requests"));
+    }
+
+    public function getSingleSongRequest($id)
+    {
+        $request = MusicOrders::find($id);
+        $connectedOrder = DB::table("connectorderworker")
+            ->where("orderId", $id)
+            ->join("users", "users.id", "=", "connectorderworker.workerid")->get();
+        $workers = User::where("permissionLevel", "1")->get();
+
+        return view("admin.singleMusicOrder", compact("request", "workers", "connectedOrder"));
+    }
+
+    public function addOrderToWorker(Request $request, $id)
+    {
+        foreach($request->worker as $index => $worker)
+        {
+            $order = new ConnectOrderWorker;
+            $order->workerId = $index;
+            $order->orderId = $id;
+            $order->save();
+        }
+
+        return redirect()->route("admin.getSingleSongRequest", $id)->with("success", "Order toegevoegd aan medewerker(s).");
     }
 }

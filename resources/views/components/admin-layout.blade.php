@@ -5,6 +5,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{asset("admin/css/sb-admin-2.css")}}">
     <script src="https://kit.fontawesome.com/e0462e4fee.js" crossorigin="anonymous"></script>
     <title>Admin</title>
@@ -53,19 +55,26 @@
             </a>
         </li>
 
-        <li class="nav-item {{Route::is("admin.getContactMessages") || Route::is("admin.getSingleContactMessage") ? "active" : ""}}">
-            <a href="{{route("admin.getContactMessages")}}" class="nav-link">
-                <i class="fa-solid fa-envelope"></i>
-                <span>Contact berichten</span>
+        <li class="nav-item {{Route::is("admin.getSongRequests") || Route::is("admin.getSingleSongRequest") ? "active" : ""}}">
+            <a class="nav-link" href="{{route("admin.getSongRequests")}}">
+                <i class="fa-solid fa-play"></i>
+                <span>Nummer verzoeken</span>
             </a>
         </li>
 
-        <li class="nav-item {{Route::is("admin.getNotifications") || Route::is("admin.getSingleNotification") ? "active" : ""}}">
-            <a href="{{route("admin.getNotifications")}}" class="nav-link">
-                <i class="fa-solid fa-bell"></i>
-                <span>Notificaties</span>
-            </a>
-        </li>
+{{--        <li class="nav-item {{Route::is("admin.getContactMessages") || Route::is("admin.getSingleContactMessage") ? "active" : ""}}">--}}
+{{--            <a href="{{route("admin.getContactMessages")}}" class="nav-link">--}}
+{{--                <i class="fa-solid fa-envelope"></i>--}}
+{{--                <span>Contact berichten</span>--}}
+{{--            </a>--}}
+{{--        </li>--}}
+
+{{--        <li class="nav-item {{Route::is("admin.getNotifications") || Route::is("admin.getSingleNotification") ? "active" : ""}}">--}}
+{{--            <a href="{{route("admin.getNotifications")}}" class="nav-link">--}}
+{{--                <i class="fa-solid fa-bell"></i>--}}
+{{--                <span>Notificaties</span>--}}
+{{--            </a>--}}
+{{--        </li>--}}
 
 {{--        <!-- Divider -->--}}
 {{--        <hr class="sidebar-divider">--}}

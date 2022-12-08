@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\MusicOrders;
 use App\Models\Notifications;
+use App\Models\OrderFiles;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class userController extends Controller
 {
@@ -114,29 +116,50 @@ class userController extends Controller
             "firstName" => "required",
             "lastName" => "required",
             "email" => "required",
-            "message" => "required"
+            "message" => "required",
+            "title" => "required"
         ]);
 
-//        $order = new MusicOrders;
-//
-//        $order->firstName = $request->firstName;
-//        $order->prefix = $request->prefix;
-//        $order->lastName = $request->lastName;
-//        $order->email = $request->email;
-//        $order->message = $request->message;
-//
-//        $order->save();
-        MusicOrders::create($request->all());
+        $order = new MusicOrders;
+
+        $order->firstName = $request->firstName;
+        $order->prefix = $request->prefix;
+        $order->lastName = $request->lastName;
+        $order->email = $request->email;
+        $order->message = $request->message;
+        $order->title = $request->title;
+        $order->userId = Session::get("user")->id;
+
+        $order->save();
         $notification = new Notifications;
 
         $notification->firstName = $request->firstName;
         $notification->prefix = $request->prefix;
         $notification->lastName = $request->lastName;
         $notification->email = $request->email;
-        $notification->message = $request->message;
+        $notification->message = "Er is een nieuwe order geplaatst";
         $notification->level = 1;
         $notification->save();
 
         return redirect()->route("buyMusic")->with("success", "Verzoek verzonden, we mailen u zo snel mogelijk.");
+    }
+
+    public function getAllOrders()
+    {
+        $orders = MusicOrders::where("userId", Session::get("user")->id)->get();
+
+        return view("user.orders", compact("orders"));
+    }
+
+    public function getSingleOrder($id)
+    {
+        $order = MusicOrders::where("id", $id)->firstOrFail();
+//        $songs = OrderFiles::where("orderId", $id)->get();
+
+        $songs = DB::table("orderfiles")
+            ->where("orderId", $id)
+            ->join("users", "users.id", "=", "orderfiles.workerId")->get();
+
+        return view("user.singleOrder", compact("order", "songs"));
     }
 }

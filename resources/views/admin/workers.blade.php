@@ -6,7 +6,7 @@
         </div>
     @endif
     <div class="table-responsive">
-        <table class="table table-striped" style="min-width: 900px">
+        <table class="table" style="min-width: 900px">
             <thead>
                 <tr>
                     <th>Voornaam</th>
@@ -26,7 +26,19 @@
                         <td>{{$user->email}}</td>
                         <td>{{$user->created_at}}</td>
                         <td>
-                            <a href="{{route("admin.singleWorker", $user->id)}}" class="btn btn-primary">Aanpassen</a>
+                            <div class="btn-group dropdown">
+                                <a href="#" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <div class="dropdown-item">
+                                            <a href="{{route("admin.singleWorker", $user->id)}}" class="">Aanpassen</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
                         </td>
                     </tr>
                 @endforeach
