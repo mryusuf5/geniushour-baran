@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BuyableOrders;
+use App\Models\ConnectOrderWorker;
 use App\Models\Contact;
 use App\Models\MusicOrders;
 use App\Models\Notifications;
@@ -21,7 +23,8 @@ class userController extends Controller
 
     public function welcome()
     {
-        return view("user.welcome");
+        $songs = BuyableOrders::orderBy("created_at", "DESC")->limit(10)->get();
+        return view("user.welcome", compact("songs"));
     }
 
     public function registerView()
@@ -107,7 +110,8 @@ class userController extends Controller
 
     public function buyMusic()
     {
-        return view("user.buyMusic");
+        $songs = BuyableOrders::orderBy("created_at", "DESC")->paginate(10);
+        return view("user.buyMusic", compact("songs"));
     }
 
     public function sendMusicRequest(Request $request)
@@ -157,9 +161,32 @@ class userController extends Controller
 //        $songs = OrderFiles::where("orderId", $id)->get();
 
         $songs = DB::table("orderfiles")
+            ->select("users.firstName", "users.prefix", "users.lastName", "orderfiles.id", "orderfiles.workerId", "orderfiles.fileName", "orderfiles.actualName", "orderfiles.created_at", "orderfiles.orderId")
             ->where("orderId", $id)
             ->join("users", "users.id", "=", "orderfiles.workerId")->get();
 
         return view("user.singleOrder", compact("order", "songs"));
+    }
+
+    public function buyLicense($songId, $orderId)
+    {
+        $songs = OrderFiles::where("orderId", $orderId)->get();
+
+        foreach($songs as $song)
+        {
+            $buyableOrder = new BuyableOrders;
+            if($song->id != $songId)
+            {
+                $buyableOrder->workerId = $song->workerId;
+                $buyableOrder->fileName = $song->fileName;
+                $buyableOrder->actualName = $song->actualName;
+                $buyableOrder->save();
+            }
+        }
+
+        MusicOrders::destroy($orderId);
+        ConnectOrderWorker::where("orderId", $orderId)->delete();
+
+        return redirect()->route("getAllOrders")->with("success", "Licentie gekocht.");
     }
 }

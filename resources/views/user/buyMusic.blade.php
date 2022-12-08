@@ -36,52 +36,42 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="">
-                        <td class="fs-2 align-middle"><i class="fa-solid fa-play play" id="1" onclick="loadTrack(this.id)"></i></td>
-                        <td class="align-middle">
-                            <h5>Last Christmas</h5>
-                            <p>door: Wham!</p>
-                        </td>
-                        <td class="align-middle">
-                            <p class="">3:04</p>
-                        </td>
-                        <td class="align-middle">
-                            <p>90</p>
-                        </td>
-                        <td class="align-middle">
-                            <div class="d-flex gap-2 fs-4">
-                                <i data-bs-toggle="tooltip" data-bs-placement="top" title="favoriet" class="fa-regular fa-heart"></i>
-                                <i class="fa-solid fa-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Kopieër link"></i>
-                            </div>
-                        </td>
-                        <td class="align-middle">
-                            <a href="" class="btn btn-secondary rounded-pill" style="min-width: 128px">Licentie kopen</a>
-                        </td>
-                    </tr>
-                    <tr class="">
-                        <td class="fs-2 align-middle"><i class="fa-solid fa-play play" id="2" onclick="loadTrack(this.id)"></i></td>
-                        <td class="align-middle">
-                            <h5>Last Christmas</h5>
-                            <p>door: Wham!</p>
-                        </td>
-                        <td class="align-middle">
-                            <p class="">3:04</p>
-                        </td>
-                        <td class="align-middle">
-                            <p>90</p>
-                        </td>
-                        <td class="align-middle">
-                            <div class="d-flex gap-2 fs-4">
-                                <i data-bs-toggle="tooltip" data-bs-placement="top" title="favoriet" class="fa-regular fa-heart"></i>
-                                <i class="fa-solid fa-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Kopieër link"></i>
-                            </div>
-                        </td>
-                        <td class="align-middle">
-                            <a href="" class="btn btn-secondary rounded-pill" style="min-width: 128px">Licentie kopen</a>
-                        </td>
-                    </tr>
+                    @foreach($songs as $song)
+                        <tr class="">
+                            <td class="fs-2 align-middle">
+                                <i class="fa-solid fa-play play song-{{$song->id}}" data-id="{{$song->id}}" data-name="{{$song->actualName}}" data-song="{{$song->fileName}}" data-creator="{{$song->firstName . " " . $song->prefix . " " . $song->lastName}}" onclick="loadTrack(this)"></i>
+                            </td>
+                            <td class="align-middle">
+                                <h5>{{Str::limit($song->actualName, 75)}}</h5>
+                                <p>door: {{$song->firstName . " " . $song->prefix . " " . $song->lastName}}</p>
+                            </td>
+                            <td class="align-middle">
+                                <p class="">3:04</p>
+                            </td>
+                            <td class="align-middle">
+                                <p>90</p>
+                            </td>
+                            <td class="align-middle">
+                                <div class="d-flex gap-2 fs-4">
+                                    <i data-bs-toggle="tooltip" data-bs-placement="top" title="favoriet" class="fa-regular fa-heart"></i>
+                                    <i class="fa-solid fa-link" data-bs-toggle="tooltip" data-bs-placement="top" title="Kopieër link"></i>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <div class="dropdown">
+                                    <a href="" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-item">
+                                            <a href="" class="">Licentie kopen</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
+                {{$songs->links()}}
             </div>
         </div>
     </div>
@@ -143,8 +133,8 @@
             <div class="d-flex justify-content-between fs-5">
                 <span id="currentDuration">00:00</span>
                 <div class="d-sm-block d-none">
-                    <span>Last Christmas</span>
-                    <span>- Wham!</span>
+                    <span id="songName"></span>
+                    <span id="songCreator"></span>
                 </div>
                 <span id="songLength">00:00</span>
             </div>
@@ -162,8 +152,8 @@
                         <input type="range" id="volumeSlider" class="form-range" max="100" value="50" onchange="setVolume()">
                     </div>
                     <div class="dropdown-item d-sm-none d-block">
-                        <span>Last Christmas</span>
-                        <span>- Wham!</span>
+                        <span id="songTitleResponsive"></span>
+                        <span id="songCreatorResponsive"></span>
                     </div>
                 </li>
             </ul>
