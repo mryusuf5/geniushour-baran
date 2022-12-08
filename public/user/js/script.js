@@ -10,6 +10,11 @@ const songLength = document.querySelector("#songLength");
 const volumeSlider = document.querySelector("#volumeSlider");
 const songSlider = document.querySelector("#songSlider");
 const currentDuration = document.querySelector("#currentDuration");
+const playSong = document.querySelector("#playSong");
+const songTitle = document.querySelector("#songName");
+const songCreator = document.querySelector("#songCreator");
+const songTitleResponsive = document.querySelector("#songTitleResponsive");
+const songCreatorResponsive = document.querySelector("#songCreatorResponsive");
 
 mp3player.style.visibility = "hidden";
 actualMp3.style.visibility = "hidden";
@@ -24,7 +29,12 @@ const loadTrack = (e) => {
     clearInterval(updateTimer);
     reset();
 
-    actualMp3.src = `user/songs/song${e}.mp3`;
+    actualMp3.src = `http://127.0.0.1:8000/files/${e.dataset.song}`;
+    songTitle.textContent = e.dataset.name;
+    songCreator.textContent = `- ${e.dataset.creator}`;
+    songCreatorResponsive.textContent = `- ${e.dataset.creator}`;
+    songTitleResponsive.textContent = e.dataset.name;
+
     actualMp3.load();
     updateTimer  = setInterval(setUpdate,1000);
     playTrack();

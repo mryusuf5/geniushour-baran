@@ -6,7 +6,7 @@
         </div>
     @endif
     <div class="table-responsive">
-        <table class="table table-striped" style="min-width: 900px">
+        <table class="table" style="min-width: 900px">
             <thead>
             <tr>
                 <th>Voornaam</th>
@@ -25,7 +25,20 @@
                     <td>{{$contact->lastName}}</td>
                     <td>{{$contact->email}}</td>
                     <td>{{Str::limit($contact->message, 50)}}</td>
-                    <td><a href="{{route("admin.getSingleContactMessage", $contact->id)}}" class="btn btn-primary">Bekijken</a></td>
+                    <td>
+                        <div class="btn-group dropdown">
+                            <a href="#" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="dropdown-item">
+                                        <a href="{{route("admin.getSingleContactMessage", $contact->id)}}" class="">Bekijken</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

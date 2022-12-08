@@ -119,6 +119,11 @@
                                 <input type="text" class="form-control"  placeholder="Email adres" name="email" value="@if(Session::get("user")){{Session::get("user")->email}}@endif">
                                 <span class="text-danger">@error("email"){{$message}}@enderror</span>
                             </div>
+                            <div class="form-group col-lg-3 col-sm-6 col-10 text-black">
+                                <label for=""><span class="text-danger fs-4">*</span> Titel:</label>
+                                <input type="text" class="form-control"  placeholder="Titel" name="title">
+                                <span class="text-danger">@error("title"){{$message}}@enderror</span>
+                            </div>
                             <div class="form-group col-10 text-black">
                                 <label for=""><span class="text-danger fs-4">*</span> Specifier hier hoe u uw nummer wilt hebben:</label>
                                 <textarea cols="30" rows="10" class="form-control"  placeholder="Bericht" name="message"></textarea>
@@ -132,4 +137,39 @@
             </div>
         </div>
     </div>
+    <div class="mp3player text-white p-3 bg-danger w-100 d-flex align-items-center gap-3 fs-2" id="mp3Player">
+        <i class="fa-solid fa-pause" id="playPauseButton" onclick="playPauseTrack()"></i>
+        <div class="d-flex flex-column w-100">
+            <div class="d-flex justify-content-between fs-5">
+                <span id="currentDuration">00:00</span>
+                <div class="d-sm-block d-none">
+                    <span>Last Christmas</span>
+                    <span>- Wham!</span>
+                </div>
+                <span id="songLength">00:00</span>
+            </div>
+            <input type="range" disabled min="1" max="100" value="0" id="songSlider" class="form-range w-100 musicPlayerRange" onchange="seekTo()">
+        </div>
+        <div class="btn-group dropup">
+            <button type="button" class="btn btn-danger" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="" class="dropdown-item">Licentie kopen</a>
+                    <div class="dropdown-item d-flex flex-column">
+                        <span>Volume</span>
+                        <input type="range" id="volumeSlider" class="form-range" max="100" value="50" onchange="setVolume()">
+                    </div>
+                    <div class="dropdown-item d-sm-none d-block">
+                        <span>Last Christmas</span>
+                        <span>- Wham!</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <audio controls id="actualMp3">
+        <source src="{{asset("user/songs/song1.mp3")}}" type="audio/mpeg">
+    </audio>
 </x-user-layout>

@@ -51,6 +51,11 @@
                                 <a href="{{route("admin.dashboard")}}">Mijn dashboard</a>
                             </li>
                         @endif
+                        @if(Session::get("user")->permissionLevel == "0")
+                            <li class="dropdown-item">
+                                <a href="{{route("getAllOrders")}}">Mijn orders</a>
+                            </li>
+                        @endif
                         <li class="dropdown-item">
                             <a href="{{route("logout")}}">Loguit</a>
                         </li>
