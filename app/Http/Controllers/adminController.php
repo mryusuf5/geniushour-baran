@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BuyableOrders;
 use App\Models\ConnectOrderWorker;
 use App\Models\Contact;
 use App\Models\MusicOrders;
@@ -196,5 +197,33 @@ class adminController extends Controller
         }
 
         return redirect()->route("admin.getSingleSongRequest", $id)->with("success", "Order toegevoegd aan medewerker(s).");
+    }
+
+    public function getAllSongs()
+    {
+        $songs = DB::table("buyableorders")
+        ->select("users.firstName", "users.prefix", "users.lastName", "buyableorders.actualName", "buyableorders.created_at", "buyableorders.id")
+        ->join("users", "users.id", "=", "buyableorders.workerId")
+        ->orderBy("buyableorders.created_at", "DESC")
+        ->paginate(10);
+
+        return view("admin.songs", compact("songs"));
+    }
+
+    public function getSingleSong($id)
+    {
+        $song = DB::table("buyableorders")
+            ->select("users.firstName", "users.prefix", "users.lastName", "buyableorders.actualName", "buyableorders.created_at", "buyableorders.id")
+            ->where("buyableorders.id", $id)
+            ->join("users", "users.id", "=", "buyableorders.workerId")->first();
+
+        return view("admin.singleSong", compact("song"));
+    }
+
+    public function deleteSong($id)
+    {
+        BuyableOrders::destroy($id);
+
+        return redirect()->route("admin.getAllSongs")->with("success", "Nummer verwijderd.");
     }
 }

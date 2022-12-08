@@ -20,9 +20,11 @@
         <div class="collapse navbar-collapse" id="navbar">
             <div class="d-flex justify-content-lg-center w-100 my-lg-0 my-3">
                 <ul class="navbar-nav mb-2 mb-lg-0 d-flex gap-4">
+                    @if(Session::get("user"))
                     <li class="nav-item">
                         <a href="{{route("buyMusic")}}" class="nav-link text-white">Muziek kopen</a>
                     </li>
+                    @endif
                     <li class="nav-item">
                         <a href="{{route("contact")}}" class="nav-link text-white">Contact</a>
                     </li>

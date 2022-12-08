@@ -48,8 +48,8 @@
             </div>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="#">
+        <li class="nav-item {{Route::is("admin.getAllSongs") || Route::is("admin.getSingleSong") ? "active" : ""}}">
+            <a class="nav-link" href="{{route("admin.getAllSongs")}}">
                 <i class="fa-solid fa-music"></i>
                 <span>Nummers</span>
             </a>

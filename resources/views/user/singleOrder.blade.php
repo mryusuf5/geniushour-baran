@@ -28,7 +28,7 @@
                         @foreach($songs as $song)
                             <tr class="">
                                 <td class="fs-2 align-middle">
-                                    <i class="fa-solid fa-play play song-{{$song->id}}" data-id="{{$song->id}}" data-name="{{$song->actualName}}" data-song="{{$song->fileName}}" data-creator="{{$order->firstName . " " . $order->prefix . " " . $order->lastName}}" onclick="loadTrack(this)"></i>
+                                    <i class="fa-solid fa-play play song-{{$song->id}}" data-id="{{$song->id}}" data-name="{{$song->actualName}}" data-song="{{$song->fileName}}" data-creator="{{$song->firstName . " " . $song->prefix . " " . $song->lastName}}" onclick="loadTrack(this)"></i>
                                 </td>
                                 <td class="align-middle">
                                     <h5>{{Str::limit($song->actualName, 75)}}</h5>
@@ -51,7 +51,7 @@
                                         <a href="" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical"></i></a>
                                         <ul class="dropdown-menu">
                                             <li class="dropdown-item">
-                                                <a href="" class="">Licentie kopen</a>
+                                                <a href="{{route("buyLicense", ["songId" => $song->id, "orderId" => $song->orderId])}}" class="">Licentie kopen</a>
                                             </li>
                                             <li class="dropdown-item">
                                                 <a href="">Revisie aanvragen</a>

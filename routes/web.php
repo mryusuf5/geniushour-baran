@@ -30,6 +30,7 @@ Route::get("muziek-kopen", [userController::class, "buyMusic"])->name("buyMusic"
 Route::post("muziek-kopen", [userController::class, "sendMusicRequest"]);
 Route::get("orders", [userController::class, "getAllOrders"])->name("getAllOrders");
 Route::get("orders/{orderId}", [userController::class, "getSingleOrder"])->name("getSingleOrder");
+Route::get("orders/{songId}/kopen/{orderId}", [userController::class, "buyLicense"])->name("buyLicense");
 
 Route::prefix("/admin")->name("admin.")->middleware("isLoggedIn")->group(function(){
     Route::get("dashboard", [adminController::class, "index"])->name("dashboard");
@@ -52,6 +53,9 @@ Route::prefix("/admin")->name("admin.")->middleware("isLoggedIn")->group(functio
     Route::get("nummer-verzoeken", [adminController::class, "getSongRequests"])->name("getSongRequests");
     Route::get("nummer-verzoeken/{requestId}", [adminController::class, "getSingleSongRequest"])->name("getSingleSongRequest");
     Route::post("nummer-verzoeken/{requestId}", [adminController::class, "addOrderToWorker"]);
+    Route::get("nummers", [adminController::class, "getAllSongs"])->name("getAllSongs");
+    Route::get("nummers/{songId}", [adminController::class, "getSingleSong"])->name("getSingleSong");
+    Route::get("nummers/{songId}/delete", [adminController::class, "deleteSong"])->name("deleteSong");
 });
 
 Route::prefix("/medewerker")->name("worker.")->middleware("workerLoggedIn")->group(function(){
